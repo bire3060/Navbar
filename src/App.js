@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Navbar from "./Components/Navbar";
+import "./index.css";
+import { Menu } from "./Components/Menu";
 
-function App() {
+const App = () => {
+  const [nav, setNav] = useState(true);
+  useEffect(() => {
+    window.addEventListener("resize", handleSize);
+    return () => {
+      window.removeEventListener("resize", handleSize);
+    };
+  });
+  function handleSize() {
+    window.innerWidth < 700 ? setNav(false) : setNav(true);
+  }
+  function handleClick() {
+    setTimeout(() => {
+      setNav(!nav);
+    }, 300);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar nav={nav} />
+      <Menu handle={handleClick} />
     </div>
   );
-}
+};
 
 export default App;
